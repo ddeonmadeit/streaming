@@ -1,0 +1,12 @@
+# Never commit real secrets — .env holds your stream keys and publish password.
+.env
+
+# BRB / media clips are large and personal; keep them out of git.
+media/*.mp4
+media/*.mov
+media/*.mkv
+media/*.jpg
+media/*.png
+
+# OS cruft
+.DS_Store

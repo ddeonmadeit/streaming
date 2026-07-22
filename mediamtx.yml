@@ -1,0 +1,33 @@
+# MediaMTX config — SRT ingest from Moblin, local RTMP read for the restreamer.
+logLevel: info
+
+# APIs / servers
+api: yes
+apiAddress: 127.0.0.1:9997        # internal only — do NOT open this port publicly
+
+rtmp: yes
+rtmpAddress: 127.0.0.1:1935       # internal only — the restreamer reads from here
+
+srt: yes
+srtAddress: :8890                 # PUBLIC — this is the only port you expose (UDP)
+
+# Auth: publishing needs the password; local reads (restreamer) are allowed.
+authMethod: internal
+authInternalUsers:
+  # Anyone on localhost can READ (the restreamer container, via host networking).
+  - user: any
+    ips: ['127.0.0.1', '::1']
+    permissions:
+      - action: read
+  # Publishing (your phone) requires the password from .env.
+  - user: publisher
+    pass: ${PUBLISH_PASS}
+    ips: []
+    permissions:
+      - action: publish
+
+paths:
+  # Your phone publishes here. Moblin streamid: publish:live:publisher:<PUBLISH_PASS>
+  live:
+    # (optional) require SRT encryption too — uncomment and set in Moblin's passphrase field:
+    # srtPublishPassphrase: "your-16plus-char-passphrase"

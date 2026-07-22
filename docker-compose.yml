@@ -1,0 +1,23 @@
+services:
+  # ── Ingest server: receives your Moblin SRT feed, exposes it locally ──
+  mediamtx:
+    image: bluenviron/mediamtx:latest
+    container_name: mediamtx
+    restart: unless-stopped
+    network_mode: host          # simplest for SRT/UDP; opens 8890/udp on the host
+    environment:
+      - PUBLISH_PASS=${PUBLISH_PASS}
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml:ro
+
+  # ── Restreamer: FIFO failover feeder + persistent encoder to all platforms ──
+  restreamer:
+    build: ./restreamer
+    container_name: restreamer
+    restart: unless-stopped
+    network_mode: host          # talks to mediamtx on 127.0.0.1
+    env_file: .env
+    volumes:
+      - ./media:/media:ro
+    depends_on:
+      - mediamtx
