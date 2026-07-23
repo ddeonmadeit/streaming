@@ -22,10 +22,14 @@ recordDeleteAfter: 0s             # 0s = keep forever (delete old files yourself
 # Auth: publishing needs the password; local reads (restreamer) are allowed.
 authMethod: internal
 authInternalUsers:
-  # Read is open (your Mac pulls the feed via HLS).
+  # Read is open (your Mac pulls the feed via HLS). 'api' lets the failover
+  # feeder query path status on the localhost-only API (127.0.0.1:9997) so it
+  # knows when your phone is live and switches BRB -> camera. Without it the
+  # feeder never detects the live feed and stays stuck on the BRB screen.
   - user: any
     permissions:
       - action: read
+      - action: api
   # Publishing requires the password. Put it in Moblin's dedicated STREAM ID field
   # as:  publish:live:publisher:<PUBLISH_PASS>   (secret stays in .env, not git).
   - user: publisher
