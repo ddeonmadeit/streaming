@@ -14,9 +14,11 @@ srtAddress: :8890                 # PUBLIC — this is the only port you expose 
 # Auth: publishing needs the password; local reads (restreamer) are allowed.
 authMethod: internal
 authInternalUsers:
-  # Anyone on localhost can READ (the restreamer container, via host networking).
+  # Read is open so your Mac can pull the SAME feed (e.g. HLS on :8888) to relay
+  # into TikTok LIVE Studio, WHILE Twitch/Kick keep running. It only exposes the
+  # video you're already broadcasting publicly, so this is fine. Publishing still
+  # requires the password below.
   - user: any
-    ips: ['127.0.0.1', '::1']
     permissions:
       - action: read
   # Publishing (your phone) requires the password from .env.
