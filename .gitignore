@@ -8,5 +8,9 @@ media/*.mkv
 media/*.jpg
 media/*.png
 
+# Stream recordings (large; keep them off git)
+recordings/*
+!recordings/.gitkeep
+
 # OS cruft
 .DS_Store

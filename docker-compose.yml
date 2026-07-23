@@ -9,6 +9,7 @@ services:
       - PUBLISH_PASS=${PUBLISH_PASS}
     volumes:
       - ./mediamtx.yml:/mediamtx.yml:ro
+      - ./recordings:/recordings          # original stream recordings land here
 
   # ── Restreamer: FIFO failover feeder + persistent encoder to all platforms ──
   restreamer:

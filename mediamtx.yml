@@ -11,6 +11,14 @@ rtmpAddress: 127.0.0.1:1935       # internal only — the restreamer reads from 
 srt: yes
 srtAddress: :8890                 # PUBLIC — this is the only port you expose (UDP)
 
+# Auto-record every stream to disk — the ORIGINAL phone feed, at the quality it
+# was sent, before any platform re-encoding. Files land in ./recordings on the
+# server (one folder per path, timestamped). Split into 1-hour segments.
+recordPath: /recordings/%path/%Y-%m-%d_%H-%M-%S-%f
+recordFormat: fmp4
+recordSegmentDuration: 1h
+recordDeleteAfter: 0s             # 0s = keep forever (delete old files yourself)
+
 # Auth: publishing needs the password; local reads (restreamer) are allowed.
 authMethod: internal
 authInternalUsers:
@@ -31,5 +39,6 @@ authInternalUsers:
 paths:
   # Your phone publishes here. Moblin streamid: publish:live:publisher:<PUBLISH_PASS>
   live:
+    record: yes                    # save the original feed to ./recordings
     # (optional) require SRT encryption too — uncomment and set in Moblin's passphrase field:
     # srtPublishPassphrase: "your-16plus-char-passphrase"
