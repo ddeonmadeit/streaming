@@ -61,6 +61,24 @@ docker compose logs -f
 Then point Moblin at `srt://SERVER_IP:8890` with Stream ID
 `publish:live:publisher:YOUR_PUBLISH_PASS` and go live.
 
+## Daily go-live cheat sheet
+
+Once set up, streaming is two words:
+
+```bash
+ssh root@YOUR_SERVER_IP
+cd streaming
+./golive.sh        # server up + BRB broadcasting to Twitch/Kick
+# → open Moblin, tap Go Live (camera replaces the BRB)
+# → when finished:
+./stop.sh          # fully offline on all platforms
+```
+
+Make the scripts runnable once: `chmod +x golive.sh stop.sh`.
+
+> Running `./golive.sh` puts the BRB screen live immediately — only run it when
+> you actually intend to stream.
+
 ## Repo layout
 
 | Path | What it is |
